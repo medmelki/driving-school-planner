@@ -1,1 +1,0 @@
-INSERT INTO role (3, 'A Super Admin Role', 'ROLE_SUPERADMIN');
