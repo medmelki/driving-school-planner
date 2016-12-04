@@ -1,4 +1,4 @@
-package com.taskmanager.model;
+package com.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,10 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
@@ -41,19 +39,6 @@ public class User implements Serializable, UserDetails {
     Set<Picture> pictures = new LinkedHashSet<>();
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     Set<Document> documents;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Task> tasksToManage;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Node> nodesToManage;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Pack> packsToManage;
-    @OneToOne
-    @JoinColumn(name = "gps_fk", nullable = true)
-    private GPS gps;
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "user")
-    private List<Task> tasks;
-    private String deviceId;
-    private String ServerIP;
 
 
     public User() {

@@ -1,7 +1,8 @@
-package com.taskmanager.model;
+package com.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,20 +14,21 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "picture")
-public class Picture implements Serializable {
+@Table(name = "document")
+public class Document implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     @Lob
+    @Column(length = 20971520)
     private byte[] data;
     @ManyToOne
     @JoinColumn(name = "user_fk")
     private User user;
 
-    public Picture() {
+    public Document() {
     }
 
     public int getId() {

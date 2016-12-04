@@ -1,6 +1,5 @@
-package com.taskmanager.security;
+package com.drivingschool.security;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 

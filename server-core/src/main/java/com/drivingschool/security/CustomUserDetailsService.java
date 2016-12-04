@@ -1,4 +1,4 @@
-package com.taskmanager.security;
+package com.drivingschool.security;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         try {
-            com.taskmanager.model.User domainUser = entityManager.createQuery("from User where username = :username", com.taskmanager.model.User.class)
+            com.drivingschool.model.User domainUser = entityManager.createQuery("from User where username = :username", com.drivingschool.model.User.class)
                     .setParameter("username", username)
                     .getSingleResult();
             return new User(

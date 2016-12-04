@@ -1,8 +1,8 @@
-package com.taskmanager.service.impl;
+package com.drivingschool.service.impl;
 
 
-import com.taskmanager.model.User;
-import com.taskmanager.service.IUserService;
+import com.drivingschool.model.User;
+import com.drivingschool.service.IUserService;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,7 +1,7 @@
-package com.taskmanager.service.impl;
+package com.drivingschool.service.impl;
 
 
-import com.taskmanager.service.IGenericService;
+import com.drivingschool.service.IGenericService;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

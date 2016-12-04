@@ -1,8 +1,8 @@
-package com.taskmanager.service.impl;
+package com.drivingschool.service.impl;
 
 
-import com.taskmanager.model.Document;
-import com.taskmanager.service.IDocumentService;
+import com.drivingschool.model.Document;
+import com.drivingschool.service.IDocumentService;
 import org.springframework.stereotype.Repository;
 
 @Repository
