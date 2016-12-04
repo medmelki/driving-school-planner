@@ -1,6 +1,6 @@
-package com.taskmanager.service;
+package com.drivingschool.service;
 
-import com.taskmanager.model.Picture;
+import com.drivingschool.model.Picture;
 import org.springframework.stereotype.Service;
 
 @Service

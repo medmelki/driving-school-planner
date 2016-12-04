@@ -1,6 +1,5 @@
-package com.taskmanager.model;
+package com.drivingschool.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,20 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable, UserDetails {
 
     @Id
@@ -34,26 +31,12 @@ public class User implements Serializable, UserDetails {
     private String phone;
     private String address;
     private String email;
-    private String manager;
     @Lob
     private byte[] pic;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    Set<Picture> pictures = new LinkedHashSet<>();
+    private Set<Picture> pictures = new LinkedHashSet<>();
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-    Set<Document> documents;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Task> tasksToManage;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Node> nodesToManage;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "manager")
-    Set<Pack> packsToManage;
-    @OneToOne
-    @JoinColumn(name = "gps_fk", nullable = true)
-    private GPS gps;
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "user")
-    private List<Task> tasks;
-    private String deviceId;
-    private String ServerIP;
+    private Set<Document> documents;
 
 
     public User() {
@@ -159,29 +142,12 @@ public class User implements Serializable, UserDetails {
         this.documents = documents;
     }
 
-    public GPS getGps() {
-        return gps;
-    }
-
-    public void setGps(GPS gps) {
-        this.gps = gps;
-    }
-
     public byte[] getPic() {
         return pic;
     }
 
     public void setPic(byte[] pic) {
         this.pic = pic;
-    }
-
-    @JsonIgnore
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
     }
 
     public String getFirstname() {
@@ -198,54 +164,5 @@ public class User implements Serializable, UserDetails {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public String getServerIP() {
-        return ServerIP;
-    }
-
-    public void setServerIP(String serverIP) {
-        ServerIP = serverIP;
-    }
-
-    @JsonIgnore
-    public Set<Task> getTasksToManage() {
-        return tasksToManage;
-    }
-
-    public void setTasksToManage(Set<Task> tasksToManage) {
-        this.tasksToManage = tasksToManage;
-    }
-
-    public Set<Node> getNodesToManage() {
-        return nodesToManage;
-    }
-
-    public void setNodesToManage(Set<Node> nodesToManage) {
-        this.nodesToManage = nodesToManage;
-    }
-
-    public Set<Pack> getPacksToManage() {
-        return packsToManage;
-    }
-
-    public void setPacksToManage(Set<Pack> packsToManage) {
-        this.packsToManage = packsToManage;
-    }
-
-    public String getManager() {
-        return manager;
-    }
-
-    public void setManager(String manager) {
-        this.manager = manager;
     }
 }

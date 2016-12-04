@@ -1,4 +1,4 @@
-package com.taskmanager.service;
+package com.drivingschool.service;
 
 
 import org.springframework.stereotype.Service;

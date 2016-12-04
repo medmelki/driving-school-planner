@@ -1,14 +1,12 @@
-package com.taskmanager.controller;
+package com.drivingschool.controller;
 
-import com.taskmanager.model.Document;
-import com.taskmanager.model.Hach;
-import com.taskmanager.model.Picture;
-import com.taskmanager.model.User;
-import com.taskmanager.service.IDocumentService;
-import com.taskmanager.service.IHachService;
-import com.taskmanager.service.IPictureService;
-import com.taskmanager.service.IUserService;
-import com.taskmanager.utils.RolesUtils;
+import com.drivingschool.model.Document;
+import com.drivingschool.model.Picture;
+import com.drivingschool.model.User;
+import com.drivingschool.service.IDocumentService;
+import com.drivingschool.service.IPictureService;
+import com.drivingschool.service.IUserService;
+import com.drivingschool.utils.RolesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +38,8 @@ public class UserController {
     private IDocumentService documentService;
     @Autowired
     private IPictureService pictureService;
-    @Autowired
-    private IHachService hachService;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
@@ -55,17 +51,7 @@ public class UserController {
         User user = userService.read(auth.getName());
         List<User> users = userService.findAll();
         List<User> usersResult = new ArrayList<>();
-        // if the user logged in is a superadmin, return all the users of the app
-        if (user.getRole().equals(ROLE_SUPERADMIN)) {
-            usersResult = users;
-        } else {
-            // check if it is an admin then filter the users with the same domain.
-            for (User usr : users) {
-                if (usr.getManager().equals(user.getUsername())) {
-                    usersResult.add(usr);
-                }
-            }
-        }
+        // TODO : check later if there is any user filter by school
         if (usersResult.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -89,9 +75,6 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
     @RequestMapping(value = "/user/", method = RequestMethod.POST)
     public ResponseEntity<Void> addUser(@RequestBody User user) {
-        if (user.getManager() == null) {
-            putManager(user);
-        }
         // encode the password of the user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.create(user);
@@ -101,9 +84,6 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
     @RequestMapping(value = "/user/", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@RequestBody User user) {
-        if (user.getManager() == null) {
-            putManager(user);
-        }
         // get the current user connected
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         for (GrantedAuthority authority : auth.getAuthorities()) {
@@ -212,15 +192,6 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPERADMIN')")
-    @RequestMapping(value = "/hash", method = RequestMethod.GET)
-    public ResponseEntity<Hach> getHash() {
-
-        Hach hach = new Hach();
-        hachService.create(hach);
-        return new ResponseEntity<>(hach, HttpStatus.OK);
-    }
-
     @PostConstruct
     public void initData() {
         // init default superadmin
@@ -236,21 +207,7 @@ public class UserController {
         if (userService.read(username) == null) {
             user.setPassword(passwordEncoder.encode(password));
             user.setRole(role);
-            user.setManager(user.getUsername());
             userService.create(user);
         }
     }
-
-    private void putManager(User user) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // get the User object mapped from the database data
-        User admin = userService.read(auth.getName());
-        // check if superadmin then put the admin as its own manager
-        if (admin.getRole().equals(ROLE_SUPERADMIN)) {
-            user.setManager(user.getUsername());
-        } else { // the admin logged it is the manager of the user to be created
-            user.setManager(admin.getUsername());
-        }
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.taskmanager.security;
+package com.drivingschool.security;
 
 
 import org.springframework.security.core.AuthenticationException;
