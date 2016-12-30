@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
     <link rel="stylesheet" href="dist/css/customStyle.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.css" media='print'>
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -22,94 +24,7 @@
 <body class="hold-transition skin-blue sidebar-mini" ng-app="rest-client" ng-controller="UserController as ctrl">
 <div class="wrapper">
 
-    <header class="main-header">
-        <a href="#" class="logo">
-            <span class="logo-mini"><b>A</b>rastu</span>
-            <span class="logo-lg"><b>A</b>rastu</span>
-        </a>
-        <nav class="navbar navbar-static-top" role="navigation">
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- Driver Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img ng-src="{{ctrl.cstantPicture}}" class="user-image" alt="Driver Image">
-                            <span class="hidden-xs">{{ctrl.currentUser.username}}</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <!-- Driver image -->
-                            <li class="user-header">
-                                <img ng-src="{{ctrl.cstantPicture}}" class="img-circle" alt="Driver Image">
-
-                                <p>
-                                    {{ctrl.currentUser.username}}
-                                    <!--<small>{{user.companyId}}</small>-->
-                                    <!--</p>-->
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="profile.html" class="btn btn-default btn-flat">Profile</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a ng-href="{{ctrl.appURL + 'logout'}}" class="btn btn-default btn-flat">Sign
-                                        out</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
-    <aside class="main-sidebar">
-        <section class="sidebar">
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search by Username..."
-                           ng-model="activeUser">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
-            <ul class="sidebar-menu">
-                <li class="header">Dashboard</li>
-
-                <li><a href="nodes.html"><i class="glyphicon glyphicon-asterisk"></i> <span>Nodes</span></a></li>
-                <li><a href="packages.html"><i class="glyphicon glyphicon-gift"></i> <span>Packages</span></a></li>
-                <li><a href="tasks.html"><i class="glyphicon glyphicon-tasks"></i> <span>Orders</span></a></li>
-
-                <li class="header">Administration</li>
-                <li class="active"><a href="admin.html"><i class="glyphicon glyphicon-user"></i><span>Drivers</span></a>
-                </li>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <li ng-controller="HashController as hashCtrl" ng-show="ctrl.isSuperAdmin">
-                    <button class="col-sm-offset-2 btn btn-danger col-sm-8" ng-click="hashCtrl.getHash()">Generate
-                        Link
-                    </button>
-                    <p><input class="col-sm-offset-1 col-sm-10" ng-model="hashCtrl.hash.hach"/></p>
-
-                </li>
-                <li ng-show="ctrl.isSuperAdmin || ctrl.isAdmin">
-                    <a target="_blank" ng-href="{{ctrl.traccarURL}}" class="btn btn-primary col-sm-offset-2 col-sm-8">Fleet Management
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </aside>
+    <ng-include src="'dist/js/views/main.header.html'"></ng-include>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -120,68 +35,13 @@
             </ol>
         </section>
         <section class="content">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Drivers Data</h3>
-                        </div>
-                        <div class="box-body">
-                            <table id="example2" class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
-                                    <th>Company ID</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th ng-show="ctrl.isSuperAdmin">Manager</th>
-                                    <th>
-                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
-                                                data-target="#addModal" ng-click="ctrl.setAddMode()"><i
-                                                class="glyphicon glyphicon-plus"></i> New
-                                        </button>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="user in ctrl.users | usersByUsername:activeUser">
-                                    <td ng-bind="user.username"></td>
-                                    <td ng-bind="user.firstname"></td>
-                                    <td ng-bind="user.lastname"></td>
-                                    <td ng-bind="user.companyId"></td>
-                                    <td ng-bind="user.phone"></td>
-                                    <td ng-bind="user.address"></td>
-                                    <td ng-bind="user.email"></td>
-                                    <td ng-bind="user.role"></td>
-                                    <td ng-show="ctrl.isSuperAdmin" ng-bind="user.manager"></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-xs"><i
-                                                class="glyphicon glyphicon-pencil" ng-click="ctrl.populateModal(user)"
-                                                data-target="#addModal" data-toggle="modal"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i
-                                                class="glyphicon glyphicon-remove"
-                                                ng-click="ctrl.deleteUser(user.username)"></i></button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <div id='calendar'></div>
         </section>
     </div>
 </div>
 
 
-<footer class="main-footer">
-
-    <strong>Copyright &copy; 2016 <a href="#">Arastu</a>.</strong> All rights reserved.
-</footer>
+<ng-include src="'dist/js/views/main.footer.html'"></ng-include>
 
 <!-- Add/Update Driver Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -320,22 +180,22 @@
 
 
 <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-
+<script src="plugins/moment.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-
 <script src="dist/js/app.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+<script src="plugins/locale-all.js"></script>
 <script src="dist/js/modules/rest-client.js"></script>
 <script src="plugins/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
 <script src="plugins/ng-file-upload.min.js"></script>
 <script src="dist/js/modules/login.js"></script>
 <script src="dist/js/services/users_service.js"></script>
-<script src="dist/js/services/hashs_service.js"></script>
 <script src="dist/js/services/common_service.js"></script>
 <script src="dist/js/modules/users.js"></script>
-<script src="dist/js/modules/hashs.js"></script>
 <script src="dist/js/filters/usersByUsername.js"></script>
 <script src="dist/js/filters/objectsById.js"></script>
+<script src="dist/js/custom.js"></script>
 
 </body>
 </html>

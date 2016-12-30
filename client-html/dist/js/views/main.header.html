@@ -1,0 +1,70 @@
+<header class="main-header">
+    <a href="#" class="logo">
+        <span class="logo-mini"><b>A</b>rastu</span>
+        <span class="logo-lg"><b>A</b>rastu</span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Driver Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img ng-src="{{ctrl.cstantPicture}}" class="user-image" alt="Driver Image">
+                        <span class="hidden-xs">{{ctrl.currentUser.username}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- Driver image -->
+                        <li class="user-header">
+                            <img ng-src="{{ctrl.cstantPicture}}" class="img-circle" alt="Driver Image">
+
+                            <p>
+                                {{ctrl.currentUser.username}}
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="profile.html" class="btn btn-default btn-flat">Profile</a>
+                            </div>
+                            <div class="pull-right">
+                                <a ng-href="{{ctrl.appURL + 'logout'}}" class="btn btn-default btn-flat">Sign
+                                    out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search by Username..."
+                       ng-model="activeUser">
+                <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+        </form>
+        <ul class="sidebar-menu">
+            <li class="header">Dashboard</li>
+
+            <li><a href="nodes.html"><i class="glyphicon glyphicon-asterisk"></i> <span>Nodes</span></a></li>
+            <li><a href="packages.html"><i class="glyphicon glyphicon-gift"></i> <span>Packages</span></a></li>
+            <li><a href="tasks.html"><i class="glyphicon glyphicon-tasks"></i> <span>Orders</span></a></li>
+
+            <li class="header">Administration</li>
+            <li class="active"><a href="admin.html"><i class="glyphicon glyphicon-user"></i><span>Drivers</span></a>
+            </li>
+        </ul>
+    </section>
+</aside>
+
+
