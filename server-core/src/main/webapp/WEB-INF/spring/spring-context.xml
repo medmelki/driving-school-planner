@@ -12,6 +12,15 @@
 
     <context:component-scan base-package="com.drivingschool"/>
 
+    <!-- Resolves views selected for rendering by @Controllers to .jsp resources
+        in the /WEB-INF/views directory -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="suffix" value=".vm"/>
+    </bean>
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="WEB-INF"/>
+    </bean>
+
 
     <!-- MySQL Datasource with Commons DBCP connection pooling -->
     <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
