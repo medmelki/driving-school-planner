@@ -32,14 +32,18 @@ import java.util.List;
 public class UserController {
 
     public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private IDocumentService documentService;
-    @Autowired
-    private IPictureService pictureService;
+    private final IUserService userService;
+    private final IDocumentService documentService;
+    private final IPictureService pictureService;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    public UserController(IUserService userService, IDocumentService documentService, IPictureService pictureService) {
+        this.userService = userService;
+        this.documentService = documentService;
+        this.pictureService = pictureService;
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
     @RequestMapping(value = "/user/", method = RequestMethod.GET)
