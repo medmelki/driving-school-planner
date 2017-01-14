@@ -1,7 +1,7 @@
 package com.drivingschool.controller;
 
 import com.drivingschool.model.Appointment;
-import com.drivingschool.service.impl.AppointmentService;
+import com.drivingschool.service.IAppointmentService;
 import com.drivingschool.utils.PermissionUtils;
 import com.drivingschool.utils.RolesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping("/appointment")
 public class AppointmentController {
 
-    private AppointmentService appointmentService;
+    private IAppointmentService appointmentService;
 
     @Autowired
-    public AppointmentController(AppointmentService appointmentService) {
+    public AppointmentController(IAppointmentService appointmentService) {
         this.appointmentService = appointmentService;
     }
 
