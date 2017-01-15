@@ -8,12 +8,12 @@ $(document).ready(function () {
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
         },
-        defaultDate: '2016-12-12',
+        defaultDate: new Date().toJSON().slice(0,10),
         locale: initialLocaleCode,
         navLinks: true, // can click day/week names to navigate views
         selectable: true,
         selectHelper: true,
-        select: function(start, end) {
+        select: function (start, end) {
             var title = prompt('Event Title:');
             var eventData;
             if (title) {
