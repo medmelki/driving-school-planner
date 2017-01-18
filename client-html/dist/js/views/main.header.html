@@ -1,25 +1,21 @@
 <header class="main-header">
-    <a href="#" class="logo">
-        <span class="logo-mini"><b>A</b>rastu</span>
-        <span class="logo-lg"><b>A</b>rastu</span>
+    <a href="#" class="logo" style="background: white;">
+        <span class="logo-mini"><img width="100%" src="dist/img/logo_large.png"/></span>
+        <span class="logo-lg"><img width="100%" src="dist/img/logo_large.png"/></span>
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-        </a>
-
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <!-- Driver Account: style can be found in dropdown.less -->
+                <!-- Client Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img ng-src="{{ctrl.cstantPicture}}" class="user-image" alt="Driver Image">
+                        <img ng-src="{{ctrl.cstantPicture}}" class="user-image" alt="Client Image">
                         <span class="hidden-xs">{{ctrl.currentUser.username}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <!-- Driver image -->
+                        <!-- Client image -->
                         <li class="user-header">
-                            <img ng-src="{{ctrl.cstantPicture}}" class="img-circle" alt="Driver Image">
+                            <img ng-src="{{ctrl.cstantPicture}}" class="img-circle" alt="Client Image">
 
                             <p>
                                 {{ctrl.currentUser.username}}
@@ -61,7 +57,7 @@
             <li><a href="tasks.html"><i class="glyphicon glyphicon-tasks"></i> <span>Orders</span></a></li>
 
             <li class="header">Administration</li>
-            <li class="active"><a href="admin.html"><i class="glyphicon glyphicon-user"></i><span>Drivers</span></a>
+            <li class="active"><a href="admin.html"><i class="glyphicon glyphicon-user"></i><span>Clients</span></a>
             </li>
         </ul>
     </section>
