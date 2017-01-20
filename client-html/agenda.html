@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Administration</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon"
+          type="image/png"
+          href="main-icon.png">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="dist/css/customStyle.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.css" media='print'>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini" ng-app="rest-client" ng-controller="UserController as ctrl">
+<div class="wrapper">
+
+    <ng-include src="'dist/js/views/main.header.html'"></ng-include>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Planning</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>Administration</a></li>
+                <li class="active">Planning</li>
+            </ol>
+        </section>
+        <section class="content">
+                <div calendar id="calendar"></div>
+        </section>
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                data-target="#addModal" ng-click="ctrl.setAddMode()"><i
+                class="glyphicon glyphicon-plus"></i> New
+        </button>
+    </div>
+
+    <ng-include src="'dist/js/views/main.footer.html'"></ng-include>
+
+</div>
+
+<!-- Add/Update Appointment Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4><strong>Appointment Information</strong></h4>
+
+                <form name="form1" class="form-horizontal col-sm-6 mod_form">
+                    <br>
+
+                    <div class="form-group form-group-sm">
+                        <label for="inputName" class="col-sm-3 control-label">Username</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" name="user" id="inputName"
+                                   ng-model="ctrl.user.username"
+                                   ng-disabled="updateMode === 1" required>
+                            <span style="color:red">
+                                <span ng-show="form1.user.$error.required">Username is required.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputFirstname" class="col-sm-3 control-label">Firstname</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="inputFirstname" ng-model="ctrl.user.firstname">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputLastname" class="col-sm-3 control-label">Lastname</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="inputLastname" ng-model="ctrl.user.lastname">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputPassword" class="col-sm-3 control-label">Password</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="password" id="inputPassword"
+                                   ng-model="ctrl.newPassword">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-3 control-label">Role</label>
+
+                        <div class="col-sm-8">
+                            <select ng-model="ctrl.user.role" name="roles" ng-options="role for role in ctrl.roles"
+                                    required>
+                            </select>
+                            <span style="color:red">
+                                <span ng-show="form1.roles.$error.required">Role is required.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm" ng-show="ctrl.isSuperAdmin && ctrl.isNormalUserOp">
+                        <label for="inputManager" class="col-sm-3 control-label">Manager</label>
+
+                        <div class="col-sm-8">
+                            <select ng-model="ctrl.user.manager" name="manager" id="inputManager"
+                                    ng-options="user for user in ctrl.admins" required>
+                            </select>
+                            <br>
+                            <span style="color:red">
+                                <span ng-show="form1.manager.$error.required">Manager is required.</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputPhone" class="col-sm-3 control-label">Phone</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="inputPhone" ng-model="ctrl.user.phone">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputCompany" class="col-sm-3 control-label">CompanyID</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" id="inputCompany" ng-model="ctrl.user.companyId">
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label for="inputEmail" class="col-sm-3 control-label">Email</label>
+
+                        <div class="col-sm-8">
+                            <input class="form-control" type="email" name="email" id="inputEmail"
+                                   ng-model="ctrl.user.email">
+                            <span style="color:red" ng-show="form1.email.$dirty && form1.email.$invalid">
+                                <span ng-show="form1.email.$error.email">Invalid email address.</span>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-horizontal col-sm-6 mod_form">
+                    <br>
+
+                    <div class="form-group form-group-sm pull-left">
+                        <label for="inputAddress" class="col-sm-3 control-label">Address</label>
+
+                        <div class="col-sm-9">
+                            <textarea class="form-control" type="text" id="inputAddress"
+                                      ng-model="ctrl.user.address"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm" style="clear:both">
+                        <label class="col-sm-3 control-label">Picture</label>
+
+                        <div ngf-drop ngf-select ng-model="file" class="drop-box"
+                             ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="true"
+                             accept="'image/*'"
+                             ngf-pattern="'image/*'">Drop image here or click to upload
+                        </div>
+                        <div ngf-no-file-drop>Picture Drag/Drop is not supported for this browser</div>
+                        <ul style="list-style:none;font:smaller">
+                            <li style="font:smaller">{{file.name}}</li>
+                        </ul>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default col-sm-offset-5" data-dismiss="modal"
+                            ng-click="ctrl.reset();">Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary col-sm-offset-10" data-dismiss="modal"
+                            ng-click="ctrl.submit(ctrl.user, updateMode)" ng-disabled="form1.user.$error.required ||
+                            form1.email.$invalid || form1.roles.$error.required ||
+                            (ctrl.isSuperAdmin && ctrl.isNormalUserOp && form1.manager.$error.required)">SUBMIT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="dist/js/app.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="plugins/moment.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+<script src="plugins/locale-all.js"></script>
+<script src="dist/js/modules/rest-client.js"></script>
+<script src="plugins/ng-file-upload-shim.min.js"></script> <!-- for no html5 browsers support -->
+<script src="plugins/ng-file-upload.min.js"></script>
+<script src="dist/js/modules/login.js"></script>
+<script src="dist/js/services/users_service.js"></script>
+<script src="dist/js/services/common_service.js"></script>
+<script src="dist/js/modules/users.js"></script>
+<script src="dist/js/filters/usersByUsername.js"></script>
+<script src="dist/js/filters/objectsById.js"></script>
+<script src="dist/js/directives/agenda.js"></script>
+
+</body>
+</html>
