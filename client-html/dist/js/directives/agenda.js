@@ -1,4 +1,5 @@
-app.directive('calendar', function () {
+app.directive('calendar', ['AppointmentService',
+    function (AppointmentService) {
         return {
             restrict: 'AE',
             scope: true,
@@ -10,6 +11,19 @@ app.directive('calendar', function () {
                     // add to angular digest cycle
                     $scope.$digest();
                 };
+                this.findAllAppointments = function () {
+                    AppointmentService.findAllAppointments()
+                        .then(
+                            function (d) {
+                                console.log("test ", d);
+                                self.appointments = d;
+                            },
+                            function (errResponse) {
+                                console.error('Error while fetching Appointments');
+                            }
+                        );
+                };
+                this.findAllAppointments();
             },
             link: function (scope, el, attrs) {
 
@@ -19,7 +33,7 @@ app.directive('calendar', function () {
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
-                    defaultDate: new Date().toJSON().slice(0,10),
+                    defaultDate: new Date().toJSON().slice(0, 10),
                     locale: 'fr',
                     navLinks: true, // can click day/week names to navigate views
                     selectable: true,
@@ -103,4 +117,5 @@ app.directive('calendar', function () {
                 });
             }
         }
-    });
+    }
+]);
