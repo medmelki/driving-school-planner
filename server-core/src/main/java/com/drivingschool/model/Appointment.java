@@ -2,19 +2,29 @@ package com.drivingschool.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Appointment.findByMonitor",
+                query = "SELECT a FROM Appointment a, User u WHERE a.monitor.username = u.username"),
+//        @NamedQuery(name = "Appointment.findByName",
+//                query = "SELECT a FROM Appointment a WHERE a.name = :name"),
+})
 @Table(name = "appointments")
 public class Appointment {
 
     @Id
     private String id;
     private Long startingTime;
-    private Double duration;
+    private Long endingTime;
     @OneToOne
     private Card card;
+    @OneToOne
+    private User monitor;
 
     public String getId() {
         return id;
@@ -32,12 +42,12 @@ public class Appointment {
         this.startingTime = startingTime;
     }
 
-    public Double getDuration() {
-        return duration;
+    public Long getEndingTime() {
+        return endingTime;
     }
 
-    public void setDuration(Double duration) {
-        this.duration = duration;
+    public void setEndingTime(Long endingTime) {
+        this.endingTime = endingTime;
     }
 
     public Card getCard() {
@@ -46,5 +56,13 @@ public class Appointment {
 
     public void setCard(Card card) {
         this.card = card;
+    }
+
+    public User getMonitor() {
+        return monitor;
+    }
+
+    public void setMonitor(User monitor) {
+        this.monitor = monitor;
     }
 }
