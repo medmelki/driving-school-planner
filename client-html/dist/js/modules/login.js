@@ -41,7 +41,7 @@
             deferred.promise.then(
                 function () {
                     $rootScope.$broadcast('login', username);
-                    $window.location.href = 'admin.html';
+                    $window.location.href = 'agenda.html';
                 },
 
                 function () {
