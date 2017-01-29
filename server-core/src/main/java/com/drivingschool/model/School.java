@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,22 +15,21 @@ import java.util.List;
 public class School implements Serializable {
 
     @Id
-    private String id;
+    private int id;
     private String address;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_username")
     private User admin;
 
-    @OneToMany
-    @JoinTable
+    @OneToMany(mappedBy="school")
     private List<Card> cards;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

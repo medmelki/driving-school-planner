@@ -1,7 +1,10 @@
 package com.drivingschool.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -23,6 +26,9 @@ public class Card implements Serializable {
     private Long dateOfBirth;
     private Long dateOfInscription;
     private String email;
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="SCHOOL_ID")
+    private School school;
 
     public String getContractId() {
         return contractId;
@@ -126,5 +132,13 @@ public class Card implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
     }
 }

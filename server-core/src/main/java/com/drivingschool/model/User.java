@@ -26,7 +26,6 @@ public class User implements Serializable, UserDetails {
     private String lastname;
     private String password;
     private String role;
-    private String companyId;
     private String phone;
     private String address;
     private String email;
@@ -91,14 +90,6 @@ public class User implements Serializable, UserDetails {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
     }
 
     public String getPhone() {
