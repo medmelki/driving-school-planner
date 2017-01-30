@@ -6,7 +6,6 @@
     <version>1.0</version>
     <packaging>war</packaging>
     <properties>
-        <java-version>1.7</java-version>
         <org.springframework-version>4.2.4.RELEASE</org.springframework-version>
         <spring.security.version>3.2.3.RELEASE</spring.security.version>
         <org.slf4j-version>1.6.1</org.slf4j-version>
