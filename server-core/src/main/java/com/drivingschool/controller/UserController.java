@@ -199,13 +199,21 @@ public class UserController {
     @PostConstruct
     public void initData() {
         // init default superadmin
-        initAdmin("superadmin", "superadmin", RolesUtils.ROLE_SUPERADMIN);
+        initUser("admin", "admin", RolesUtils.ROLE_SUPERADMIN);
         // init default admin
-        initAdmin("admin", "admin", RolesUtils.ROLE_ADMIN);
+        initUser("admin1", "admin", RolesUtils.ROLE_ADMIN);
+        initUser("admin2", "admin", RolesUtils.ROLE_ADMIN);
+        initUser("admin3", "admin", RolesUtils.ROLE_ADMIN);
+        // init monitors
+        initUser("monitor1", "monitor", RolesUtils.ROLE_INSTRUCTOR);
+        initUser("monitor2", "monitor", RolesUtils.ROLE_INSTRUCTOR);
+        initUser("monitor3", "monitor", RolesUtils.ROLE_INSTRUCTOR);
+        // init users
+        initUser("user1", "user", RolesUtils.ROLE_USER);
 
     }
 
-    private void initAdmin(String username, String password, String role) {
+    private void initUser(String username, String password, String role) {
         User user = new User();
         user.setUsername(username);
         if (userService.read(username) == null) {
