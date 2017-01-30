@@ -9,10 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Appointment.findByMonitor",
+        @NamedQuery(name = "Appointment.findByInstructor",
                 query = "SELECT a FROM Appointment a WHERE a.monitor.username = :username"),
         @NamedQuery(name = "Appointment.findBySchoolId",
                 query = "SELECT a FROM Appointment a WHERE a.card.school.id = :schoolId"),
+        @NamedQuery(name = "Appointment.findByAdmin",
+                query = "SELECT a FROM Appointment a WHERE a.card.school.admin.username = :username"),
 })
 @Table(name = "appointments")
 public class Appointment {

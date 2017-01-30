@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +34,17 @@ public class AppointmentController {
     public ResponseEntity<List<Appointment>> listAll() {
 
         List<Appointment> appointments = new ArrayList<>();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
         switch (RolesUtils.getCurrentUserRole()) {
             case RolesUtils.ROLE_SUPERADMIN:
+                appointments = appointmentService.findAll();
                 break;
             case RolesUtils.ROLE_ADMIN:
+                appointments = appointmentService.findByAdmin(username);
                 break;
             case RolesUtils.ROLE_INSTRUCTOR:
+                appointments = appointmentService.findByInstructor(username);
                 break;
             case RolesUtils.ROLE_USER:
                 break;

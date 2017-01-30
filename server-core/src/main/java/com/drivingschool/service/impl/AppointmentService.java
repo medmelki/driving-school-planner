@@ -5,6 +5,8 @@ import com.drivingschool.model.Appointment;
 import com.drivingschool.service.IAppointmentService;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class AppointmentService extends GenericService<Appointment, String> implements IAppointmentService {
 
@@ -12,18 +14,28 @@ public class AppointmentService extends GenericService<Appointment, String> impl
         super(Appointment.class);
     }
 
-    public Appointment findByMonitor(String username) {
-        return entityManager.createNamedQuery("Appointment.findByMonitor",
+    @Override
+    public List<Appointment> findByInstructor(String username) {
+        return entityManager.createNamedQuery("Appointment.findByInstructor",
                 Appointment.class)
                 .setParameter("username", username)
-                .getSingleResult();
+                .getResultList();
     }
 
-    public Appointment findBySchoolId(int id) {
+    @Override
+    public List<Appointment> findBySchoolId(int id) {
         return entityManager.createNamedQuery("Appointment.findBySchoolId",
                 Appointment.class)
                 .setParameter("schoolId", id)
-                .getSingleResult();
+                .getResultList();
+    }
+
+    @Override
+    public List<Appointment> findByAdmin(String username) {
+        return entityManager.createNamedQuery("Appointment.findByAdmin",
+                Appointment.class)
+                .setParameter("username", username)
+                .getResultList();
     }
 
 }
