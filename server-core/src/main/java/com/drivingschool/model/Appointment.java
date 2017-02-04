@@ -21,8 +21,8 @@ public class Appointment {
 
     @Id
     private String id;
-    private Long startingTime;
-    private Long endingTime;
+    private Long start;
+    private Long end;
     @OneToOne
     private Card card;
     @OneToOne
@@ -36,20 +36,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public Long getStartingTime() {
-        return startingTime;
+    public Long getStart() {
+        return start;
     }
 
-    public void setStartingTime(Long startingTime) {
-        this.startingTime = startingTime;
+    public void setStart(Long startingTime) {
+        this.start = startingTime;
     }
 
-    public Long getEndingTime() {
-        return endingTime;
+    public Long getEnd() {
+        return end;
     }
 
-    public void setEndingTime(Long endingTime) {
-        this.endingTime = endingTime;
+    public void setEnd(Long endingTime) {
+        this.end = endingTime;
     }
 
     public Card getCard() {
