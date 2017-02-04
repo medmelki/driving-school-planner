@@ -1,5 +1,7 @@
 package com.drivingschool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -22,7 +24,7 @@ public class School implements Serializable {
     @JoinColumn(name = "admin_username")
     private User admin;
 
-    @OneToMany(mappedBy="school")
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
     private List<Card> cards;
 
     public int getId() {
@@ -49,6 +51,7 @@ public class School implements Serializable {
         this.admin = admin;
     }
 
+    @JsonIgnore
     public List<Card> getCards() {
         return cards;
     }

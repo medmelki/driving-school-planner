@@ -1,5 +1,7 @@
 package com.drivingschool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -134,6 +136,7 @@ public class Card implements Serializable {
         this.email = email;
     }
 
+    @JsonIgnore
     public School getSchool() {
         return school;
     }
