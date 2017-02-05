@@ -6,6 +6,7 @@ import com.drivingschool.model.User;
 import com.drivingschool.service.IDocumentService;
 import com.drivingschool.service.IPictureService;
 import com.drivingschool.service.IUserService;
+import com.drivingschool.utils.PermissionUtils;
 import com.drivingschool.utils.RolesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +63,7 @@ public class UserController {
         return new ResponseEntity<>(usersResult, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/current", method = RequestMethod.GET)
     public ResponseEntity<User> getAuthenticatedUser() {
 
@@ -119,7 +120,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/documents/upload/")
     public void uploadDocument(@RequestParam("document") MultipartFile document, @RequestParam("username") String username) throws IOException {
 
@@ -134,7 +135,7 @@ public class UserController {
         documentService.create(doc);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/pictures/upload/")
     public void uploadPicture(@RequestParam("picture") MultipartFile picture, @RequestParam("username") String username) throws IOException {
 
@@ -149,7 +150,7 @@ public class UserController {
         pictureService.create(pic);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/pic/upload/")
     public void uploadProfilePicture(@RequestParam("picture") MultipartFile picture, @RequestParam("username") String username) throws IOException {
 
@@ -160,7 +161,7 @@ public class UserController {
         userService.update(user);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/pic/{username}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable String username) throws IOException {
 
@@ -176,7 +177,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/picture/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deletePicture(@PathVariable String id) {
 
@@ -186,7 +187,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/user/document/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteDocument(@PathVariable String id) {
 

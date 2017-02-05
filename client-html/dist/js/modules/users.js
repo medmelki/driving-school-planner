@@ -4,10 +4,24 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
     function ($rootScope, $scope, Upload, UserService, $timeout, $sce, CommonService) {
 
         var self = this;
-        self.user = {username: '', firstname: '', lastname: '', password: '', address: '', email: ''};
-        self.currentUser = {username: '', firstname: '', lastname: '', password: '', address: '', email: ''};
+        self.user = {
+            username: '',
+            firstname: '',
+            lastname: '',
+            password: '',
+            address: '',
+            email: ''
+        };
+        self.currentUser = {
+            username: '',
+            firstname: '',
+            lastname: '',
+            password: '',
+            address: '',
+            email: ''
+        };
         self.users = [];
-        self.roles = ["ROLE_USER", "ROLE_ADMIN", "ROLE_SUPERADMIN"];
+        self.roles = ["ROLE_USER", "ROLE_ADMIN", "ROLE_SUPERADMIN", "ROLE_INSTRUCTOR"];
         self.admins = [];
         $rootScope.updateMode = 0;
         self.newPassword = '';
@@ -18,7 +32,6 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
 
 
         self.appURL = CommonService.appURL + '/';
-        self.traccarURL = CommonService.traccarURL + '/';
 
         self.getPicture = function (username) {
             UserService.getPicture(username)
@@ -115,7 +128,7 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
                 );
         };
 
-        self.findAllUsers();
+        // self.findAllUsers();
 
         self.submit = function (user, isUpdateMode) {
             console.log(isUpdateMode);
