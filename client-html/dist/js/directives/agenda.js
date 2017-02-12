@@ -38,6 +38,19 @@ app.directive('calendar', ['AppointmentService', '$filter',
                         }
                         $('#calendar').fullCalendar('unselect');
                     },
+                    eventClick: function (event, jsEvent, view) {
+                        $('.modal-title:first').html(event.title);
+                        var modalBody = $('.modal-body:first');
+                        modalBody.html('<strong>Contrat n° : </strong>' + event.card.contractId + '<br>');
+
+                        modalBody.append('<strong>Email : </strong>' +
+                            (event.card.email ? event.card.email : '_') + '<br>');
+                        modalBody.append('<strong>Type : </strong>' +
+                            (event.card.type ? event.card.type : '_') + '<br>');
+                        modalBody.append('<strong>Telephone : </strong>' +
+                            (event.card.telephone ? event.card.telephone : '_') + '<br>');
+                        $('#showAppointmentModal').modal();
+                    },
                     editable: true,
                     eventLimit: true, // allow "more" link when too many events
                     // events: [
@@ -104,8 +117,7 @@ app.directive('calendar', ['AppointmentService', '$filter',
                         .then(
                             function (d) {
                                 for (var i = 0; i < d.length; i++) {
-                                    var appointment = {};
-                                    appointment.id = d[i].id;
+                                    var appointment = d[i];
                                     appointment.title = d[i].card.firstname + " " + d[i].card.lastname;
                                     appointment.start = $filter('date')(d[i].start, "yyyy-MM-dd HH:mm:ss Z");
                                     appointment.end = $filter('date')(d[i].end, "yyyy-MM-dd HH:mm:ss Z");
@@ -116,7 +128,7 @@ app.directive('calendar', ['AppointmentService', '$filter',
 
                             },
                             function (error) {
-                                console.error('Error while fetching Appointments'+ error);
+                                console.error('Error while fetching Appointments' + error);
                             }
                         );
                 };
