@@ -9,16 +9,16 @@
                 <!-- Client Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img ng-src="{{ctrl.cstantPicture}}" class="user-image" alt="Client Image">
-                        <span class="hidden-xs">{{ctrl.currentUser.username}}</span>
+                        <img ng-src="{{userCtrl.cstantPicture}}" class="user-image" alt="Client Image">
+                        <span class="hidden-xs">{{userCtrl.currentUser.username}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- Client image -->
                         <li class="user-header">
-                            <img ng-src="{{ctrl.cstantPicture}}" class="img-circle" alt="Client Image">
+                            <img ng-src="{{userCtrl.cstantPicture}}" class="img-circle" alt="Client Image">
 
                             <p>
-                                {{ctrl.currentUser.username}}
+                                {{userCtrl.currentUser.username}}
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
@@ -26,7 +26,7 @@
                                 <a href="profile.html" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a ng-href="{{ctrl.appURL + 'logout'}}" class="btn btn-default btn-flat">Sign
+                                <a ng-href="{{userCtrl.appURL + 'logout'}}" class="btn btn-default btn-flat">Sign
                                     out</a>
                             </div>
                         </li>
