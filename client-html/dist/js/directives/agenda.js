@@ -39,17 +39,28 @@ app.directive('calendar', ['AppointmentService', '$filter',
                         $('#calendar').fullCalendar('unselect');
                     },
                     eventClick: function (event, jsEvent, view) {
-                        $('.modal-title:first').html(event.title);
-                        var modalBody = $('.modal-body:first');
-                        modalBody.html('<strong>Contrat n° : </strong>' + event.card.contractId + '<br>');
-
-                        modalBody.append('<strong>Email : </strong>' +
-                            (event.card.email ? event.card.email : '_') + '<br>');
-                        modalBody.append('<strong>Type : </strong>' +
-                            (event.card.type ? event.card.type : '_') + '<br>');
-                        modalBody.append('<strong>Telephone : </strong>' +
-                            (event.card.telephone ? event.card.telephone : '_') + '<br>');
-                        $('#showAppointmentModal').modal();
+                        var $contextMenu = $("#contextMenu");
+                        $contextMenu.css({
+                            display: "block",
+                            left: jsEvent.pageX,
+                            top: jsEvent.pageY
+                        });
+                        $('#context-info-btn').click(function () {
+                            showEventInfos(event);
+                            $contextMenu.hide();
+                        });
+                        $('#context-modify-btn').click(function () {
+                            showEventInfos(event);
+                            $contextMenu.hide();
+                        });
+                        $('#context-delete-btn').click(function () {
+                            // TODO: modifyEvent Modal(Add event modal with edit mode)
+                            showEventInfos(event);
+                            $contextMenu.hide();
+                        });
+                        $('#context-close-btn').click(function () {
+                            $contextMenu.hide();
+                        });
                     },
                     editable: true,
                     eventLimit: true, // allow "more" link when too many events
@@ -141,3 +152,17 @@ app.directive('calendar', ['AppointmentService', '$filter',
         }
     }
 ]);
+
+function showEventInfos(event) {
+    $('.modal-title:first').html(event.title);
+    var modalBody = $('.modal-body:first');
+    modalBody.html('<strong>Contrat n° : </strong>' + event.card.contractId + '<br>');
+
+    modalBody.append('<strong>Email : </strong>' +
+        (event.card.email ? event.card.email : '_') + '<br>');
+    modalBody.append('<strong>Type : </strong>' +
+        (event.card.type ? event.card.type : '_') + '<br>');
+    modalBody.append('<strong>Telephone : </strong>' +
+        (event.card.telephone ? event.card.telephone : '_') + '<br>');
+    $('#showAppointmentModal').modal();
+}
