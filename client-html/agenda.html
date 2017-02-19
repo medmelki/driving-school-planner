@@ -22,8 +22,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini" ng-app="rest-client" ng-controller="UserController as ctrl">
-<div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="rest-client" ng-controller="UserController as userCtrl">
+<div class="wrapper" ng-controller="AppointmentController as appCtrl">
 
     <ng-include src="'dist/js/views/main.header.html'"></ng-include>
 
@@ -50,7 +50,8 @@
 
 <!-- Context event menu Popover -->
 <div id="contextMenu" class="dropdown clearfix">
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu"
+        style="display:block;position:static;margin-bottom:5px;">
         <li><a id="context-info-btn" tabindex="-1" href="#">Voir Infos</a></li>
         <li><a id="context-modify-btn" tabindex="-1" href="#">Modifier</a></li>
         <li><a id="context-delete-btn" tabindex="-1" href="#">Supprimer</a></li>
@@ -76,18 +77,28 @@
 </div>
 <div id="addAppointmentModal" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background: rgb(250, 250, 250)">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span
-                        class="sr-only">close</span></button>
-                <h4 id="modalTitle" class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Créer un Rendez-vous</h4>
             </div>
-            <div id="modalBody" class="modal-body"></div>
+            <div class="modal-body">
+                <div class="col-sm-8">
+                    <select style="width: 50%;" ng-model="appCtrl.appointment.card"
+                            ng-options="card as card.firstname + card.lastname for card in cardCtrl.cards">
+                    </select>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="appCtrl.reset();">Annuler
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        ng-click="appCtrl.submit(appCtrl.task, updateMode);">Ajouter
+                </button>
             </div>
-        </div>
-    </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 
 
