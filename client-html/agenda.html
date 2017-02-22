@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="rest-client" ng-controller="UserController as userCtrl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,8 +22,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini" ng-app="rest-client" ng-controller="UserController as userCtrl">
-<div class="wrapper" ng-controller="AppointmentController as appCtrl">
+<body class="hold-transition skin-blue sidebar-mini"ng-controller="AppointmentController as appCtrl">
+<div class="wrapper">
 
     <ng-include src="'dist/js/views/main.header.html'"></ng-include>
 
@@ -109,7 +109,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="appCtrl.reset();">Annuler
                 </button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        ng-click="appCtrl.submit(appCtrl.appointment, updateMode);">Ajouter
+                        ng-click="appCtrl.submit(appCtrl.appointment, 0);">Ajouter
                 </button>
             </div>
         </div><!-- /.modal-content -->

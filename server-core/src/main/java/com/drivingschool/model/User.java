@@ -76,7 +76,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authList = new HashSet<GrantedAuthority>();
+        Set<GrantedAuthority> authList = new HashSet<>();
 
         authList.add(new SimpleGrantedAuthority(this.getRole()));
         return authList;

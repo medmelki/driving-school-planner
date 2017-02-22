@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/appointment")
@@ -58,6 +59,7 @@ public class AppointmentController {
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> addAppointment(@RequestBody Appointment appointment) {
+        appointment.setId(UUID.randomUUID().toString());
         appointmentService.create(appointment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
