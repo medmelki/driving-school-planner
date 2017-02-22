@@ -30,14 +30,16 @@ app.directive('calendar', ['AppointmentService', '$filter',
                         // var title = prompt('Event Title:');
                         var title = '';
                         var eventData;
+                        scope.$parent.appCtrl.appointment.start = moment(start._d).toDate().getTime();
+                        scope.$parent.appCtrl.appointment.end = moment(end._d).toDate().getTime();
                         if (title) {
                             eventData = {
                                 title: title,
                                 start: start,
                                 end: end
                             };
-                            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                         }
+                        $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
                         $('#calendar').fullCalendar('unselect');
                     },
                     eventClick: function (event, jsEvent, view) {
