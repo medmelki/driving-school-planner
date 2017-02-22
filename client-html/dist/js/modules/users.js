@@ -23,6 +23,7 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
         self.users = [];
         self.roles = ["ROLE_USER", "ROLE_ADMIN", "ROLE_SUPERADMIN", "ROLE_INSTRUCTOR"];
         self.admins = [];
+        self.monitors = [];
         $rootScope.updateMode = 0;
         self.newPassword = '';
 
@@ -96,6 +97,18 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
                 );
         };
 
+        self.findMonitors = function () {
+            UserService.findUserByRole('ROLE_INSTRUCTOR')
+                .then(
+                    function (d) {
+                        self.monitors = d;
+                    },
+                    function (errResponse) {
+                        console.error('Error while fetching user');
+                    }
+                );
+        };
+
         self.createUser = function (user) {
             UserService.createUser(user)
                 .then(
@@ -128,7 +141,7 @@ app.controller('UserController', ['$rootScope', '$scope', 'Upload', 'UserService
                 );
         };
 
-        // self.findAllUsers();
+        self.findMonitors();
 
         self.submit = function (user, isUpdateMode) {
             console.log(isUpdateMode);

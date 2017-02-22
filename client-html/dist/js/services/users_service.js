@@ -35,6 +35,22 @@ app.factory('UserService', ['$window', '$http', '$q', 'CommonService', function 
                 );
         },
 
+        findUserByRole: function (role) {
+            return $http.get(appURL + 'user/' + role, {withCredentials: true})
+                .then(
+                    function (response) {
+                        return response.data;
+                    },
+                    function (errResponse) {
+                        console.error('Error while fetching user');
+                        if (errResponse.status == 403) {
+                            $window.location = "login.html";
+                        }
+                        return $q.reject(errResponse);
+                    }
+                );
+        },
+
         findAllRoles: function () {
             return $http.get(appURL + 'role/', {withCredentials: true})
                 .then(

@@ -83,18 +83,33 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Créer un Rendez-vous</h4>
             </div>
-            <div class="modal-body">
-                <div class="col-sm-8">
-                    <select style="width: 50%;" ng-model="appCtrl.appointment.card"
-                            ng-options="card as card.firstname + card.lastname for card in cardCtrl.cards">
-                    </select>
+            <div class="modal-body" ng-controller="CardController as cardCtrl">
+                <div class="form-group form-group-sm">
+                    <br>
+                    <label class="col-sm-2 control-label">Client : </label>
+
+                    <div class="col-sm-8">
+                        <select style="width: 50%;" ng-model="appCtrl.appointment.card"
+                                ng-options="card as card.firstname + card.lastname for card in cardCtrl.cards">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group form-group-sm">
+                    <br>
+                    <label class="col-sm-2 control-label">Moniteur : </label>
+
+                    <div class="col-sm-8">
+                        <select style="width: 50%;" ng-model="appCtrl.appointment.monitor"
+                                ng-options="user.username for user in userCtrl.monitors">
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="appCtrl.reset();">Annuler
                 </button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        ng-click="appCtrl.submit(appCtrl.task, updateMode);">Ajouter
+                        ng-click="appCtrl.submit(appCtrl.appointment, updateMode);">Ajouter
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -114,9 +129,11 @@
 <script src="plugins/ng-file-upload.min.js"></script>
 <script src="dist/js/modules/login.js"></script>
 <script src="dist/js/modules/appointments.js"></script>
+<script src="dist/js/modules/cards.js"></script>
 <script src="dist/js/services/users_service.js"></script>
 <script src="dist/js/services/common_service.js"></script>
 <script src="dist/js/services/appointments_service.js"></script>
+<script src="dist/js/services/cards_service.js"></script>
 <script src="dist/js/modules/users.js"></script>
 <script src="dist/js/filters/usersByUsername.js"></script>
 <script src="dist/js/filters/objectsById.js"></script>

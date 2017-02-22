@@ -26,10 +26,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     public static final String ROLE_SUPERADMIN = "ROLE_SUPERADMIN";
@@ -47,15 +47,22 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
-    @RequestMapping(value = "/user/", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAll() {
 
-        // retrieve the current logged in admin/superadmin
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // get the User object mapped from the database data
-        User user = userService.read(auth.getName());
-        List<User> users = userService.findAll();
-        List<User> usersResult = new ArrayList<>();
+        List<User> usersResult = userService.findAll();
+        // TODO : check later if there is any user filter by school
+        if (usersResult.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(usersResult, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @RequestMapping(value = "/{role}", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> listByRole(@PathVariable("role") String role) {
+
+        List<User> usersResult = userService.findByRole(role);
         // TODO : check later if there is any user filter by school
         if (usersResult.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,12 +71,10 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/current", method = RequestMethod.GET)
+    @RequestMapping(value = "/current", method = RequestMethod.GET)
     public ResponseEntity<User> getAuthenticatedUser() {
 
-        // retrieve the current logged in user
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // A security operation to check if the current user is registered in database
         User user = userService.read(auth.getName());
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -78,7 +83,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
-    @RequestMapping(value = "/user/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> addUser(@RequestBody User user) {
         // encode the password of the user
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -87,7 +92,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
-    @RequestMapping(value = "/user/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         // get the current user connected
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,7 +116,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
-    @RequestMapping(value = "/user/{username}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteUser(@PathVariable String username) {
 
         User user = new User();
@@ -121,7 +126,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/documents/upload/")
+    @RequestMapping(value = "/documents/upload/")
     public void uploadDocument(@RequestParam("document") MultipartFile document, @RequestParam("username") String username) throws IOException {
 
         Document doc = new Document();
@@ -136,7 +141,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/pictures/upload/")
+    @RequestMapping(value = "/pictures/upload/")
     public void uploadPicture(@RequestParam("picture") MultipartFile picture, @RequestParam("username") String username) throws IOException {
 
         Picture pic = new Picture();
@@ -151,7 +156,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/pic/upload/")
+    @RequestMapping(value = "/pic/upload/")
     public void uploadProfilePicture(@RequestParam("picture") MultipartFile picture, @RequestParam("username") String username) throws IOException {
 
         User user = userService.read(username);
@@ -162,7 +167,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/pic/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "/pic/{username}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getProfilePicture(@PathVariable String username) throws IOException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -178,7 +183,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/picture/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/picture/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deletePicture(@PathVariable String id) {
 
         // TODO : add security aspect to verify it is the picture's owner who is calling the service
@@ -188,7 +193,7 @@ public class UserController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
-    @RequestMapping(value = "/user/document/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/document/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<User> deleteDocument(@PathVariable String id) {
 
         // TODO : add security aspect to verify it is the picture's owner who is calling the service
