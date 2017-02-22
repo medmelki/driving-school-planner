@@ -27,7 +27,8 @@ app.directive('calendar', ['AppointmentService', '$filter',
                     selectHelper: true,
                     select: function (start, end) {
                         $('#addAppointmentModal').modal();
-                        var title = prompt('Event Title:');
+                        // var title = prompt('Event Title:');
+                        var title = '';
                         var eventData;
                         if (title) {
                             eventData = {

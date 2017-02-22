@@ -56,14 +56,14 @@ public class AppointmentController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
-    @RequestMapping(value = "/appointment/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> addAppointment(@RequestBody Appointment appointment) {
         appointmentService.create(appointment);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
-    @RequestMapping(value = "/appointment/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity<Appointment> updateAppointment(@RequestBody Appointment appointment) {
         appointmentService.update(appointment);
         return new ResponseEntity<>(appointment, HttpStatus.OK);
