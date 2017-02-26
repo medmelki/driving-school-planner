@@ -6,7 +6,7 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
         var self = this;
         self.appointment = {};
         self.appointments = [];
-        $scope.updateMode = 0;
+        self.updateMode = 0;
 
         self.findAllAppointments = function () {
             AppointmentService.findAllAppointments()
@@ -64,12 +64,9 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
 
         self.findAllAppointments();
 
-        self.submit = function (appointment, isUpdateMode) {
-            // appointment.time = new Date(appointment.time).getTime();
+        self.submit = function (appointment) {
             appointment.monitor.authorities = null;
-            $scope.updateMode = isUpdateMode;
-            console.log($scope.updateMode);
-            if ($scope.updateMode === 0) {
+            if (self.updateMode === 0) {
                 console.log('Saving New Appointment', appointment);
                 self.createAppointment(appointment);
             } else {

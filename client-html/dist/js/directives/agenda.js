@@ -26,6 +26,7 @@ app.directive('calendar', ['AppointmentService', '$filter',
                     selectable: true,
                     selectHelper: true,
                     select: function (start, end) {
+                        scope.$parent.appCtrl.updateMode = 0;
                         $('#addAppointmentModal').modal();
                         var eventData;
                         var appointment = scope.$parent.appCtrl.appointment;
@@ -45,12 +46,12 @@ app.directive('calendar', ['AppointmentService', '$filter',
                                 $('#calendar').fullCalendar('unselect');
                             }
                         }, true);
-                        // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                        // $('#calendar').fullCalendar('unselect');
 
                     },
                     eventClick: function (event, jsEvent, view) {
                         var $contextMenu = $("#contextMenu");
+                        var appCtrl = scope.$parent.appCtrl;
+                        var appointment = scope.$parent.appCtrl.appointment;
                         $contextMenu.css({
                             display: "block",
                             left: jsEvent.pageX,
@@ -61,7 +62,21 @@ app.directive('calendar', ['AppointmentService', '$filter',
                             $contextMenu.hide();
                         });
                         $('#context-modify-btn').click(function () {
-                            showEventInfos(event);
+                            appCtrl.updateMode = 1;
+                            $('#addAppointmentModal').modal();
+                            appointment.id = event.id;
+                            appointment.start = moment(event.start._d).toDate().getTime();
+                            appointment.end = moment(event.end._d).toDate().getTime();
+                            scope.$watch(function () {
+                                return appointment.card.firstname;
+                            }, function (newValue, oldValue) {
+                                if (appointment.card.firstname) {
+                                    event.title = appointment.card.firstname + ' ' + appointment.card.lastname;
+
+                                    $('#calendar').fullCalendar('rerenderEvents');
+                                    $('#calendar').fullCalendar('unselect');
+                                }
+                            }, true);
                             $contextMenu.hide();
                         });
                         $('#context-delete-btn').click(function () {
