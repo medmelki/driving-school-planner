@@ -86,12 +86,12 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
             }
         };
 
-        self.remove = function (id) {
-            console.log('id to be deleted', id);
-            if (self.appointment.id === id) {//clean form if the appointment to be deleted is shown there.
-                self.reset();
-            }
-            self.deleteAppointment(id);
+        self.remove = function () {
+            // if (self.appointment.id === id) {//clean form if the appointment to be deleted is shown there.
+            //     self.reset();
+            // }
+            self.deleteAppointment(self.appointment.id);
+            self.reset();
         };
 
         self.reset = function () {

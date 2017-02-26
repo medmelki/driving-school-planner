@@ -80,8 +80,10 @@ app.directive('calendar', ['AppointmentService', '$filter',
                             $contextMenu.hide();
                         });
                         $('#context-delete-btn').click(function () {
-                            // TODO: modifyEvent Modal(Add event modal with edit mode)
-                            showEventInfos(event);
+                            appointment.id = event.id;
+                            appCtrl.remove();
+                            $('#calendar').fullCalendar('removeEvents',event._id);
+                            $('#calendar').fullCalendar('rerenderEvents');
                             $contextMenu.hide();
                         });
                         $('#context-close-btn').click(function () {
@@ -191,4 +193,13 @@ function showEventInfos(event) {
     modalBody.append('<strong>Telephone : </strong>' +
         (event.card.telephone ? event.card.telephone : '_') + '<br>');
     $('#showAppointmentModal').modal();
+}
+
+function findEventById(events, event) {
+    for (var i = 0; i < events.length; i++) {
+        if (events[i].id && events[i].id === event.id) {
+            return i;
+        }
+    }
+    return -1;
 }
