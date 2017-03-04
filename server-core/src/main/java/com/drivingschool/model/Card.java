@@ -2,13 +2,16 @@ package com.drivingschool.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "cards")
@@ -28,8 +31,10 @@ public class Card implements Serializable {
     private Long dateOfBirth;
     private Long dateOfInscription;
     private String email;
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="SCHOOL_ID")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card", orphanRemoval = true)
+    private List<Appointment> appointments;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SCHOOL_ID")
     private School school;
 
     public String getContractId() {
@@ -143,5 +148,14 @@ public class Card implements Serializable {
 
     public void setSchool(School school) {
         this.school = school;
+    }
+
+    @JsonIgnore
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 }
