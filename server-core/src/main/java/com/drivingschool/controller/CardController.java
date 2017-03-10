@@ -39,14 +39,14 @@ public class CardController {
     }
 
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
-    @RequestMapping(value = "/card/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> addCard(@RequestBody Card card) {
         cardService.create(card);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
-    @RequestMapping(value = "/card/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity<Card> updateCard(@RequestBody Card card) {
         cardService.update(card);
         return new ResponseEntity<>(card, HttpStatus.OK);
