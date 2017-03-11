@@ -56,8 +56,7 @@ public class CardController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Card> deleteCard(@PathVariable String id) {
 
-        Card card = new Card();
-        card.setContractId(id);
+        Card card = cardService.read(id);
         cardService.delete(card);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
