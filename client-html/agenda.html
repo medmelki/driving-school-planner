@@ -25,7 +25,67 @@
 <body class="hold-transition skin-blue sidebar-mini" ng-controller="AppointmentController as appCtrl">
 <div class="wrapper">
 
-    <ng-include src="'dist/js/views/main.header.html'"></ng-include>
+    <header class="main-header">
+        <a href="#" class="logo" style="background: white;">
+            <span class="logo-mini"><img width="100%" src="dist/img/logo_large.png"/></span>
+            <span class="logo-lg"><img width="100%" src="dist/img/logo_large.png"/></span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Client Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img ng-src="{{userCtrl.cstantPicture}}" class="user-image" alt="Client Image">
+                            <span class="hidden-xs">{{userCtrl.currentUser.username}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- Client image -->
+                            <li class="user-header">
+                                <img ng-src="{{userCtrl.cstantPicture}}" class="img-circle" alt="Client Image">
+
+                                <p>
+                                    {{userCtrl.currentUser.username}}
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="profile.html" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a ng-href="{{userCtrl.appURL + 'logout'}}" class="btn btn-default btn-flat">Sign
+                                        out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search by Username..."
+                           ng-model="activeUser">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <ul class="sidebar-menu">
+                <li class="header">Dashboard</li>
+
+                <li class="active"><a href="agenda.html"><i class="glyphicon glyphicon-asterisk"></i>
+                    <span>Agenda</span></a></li>
+                <li><a href="fiches.html"><i class="glyphicon glyphicon-gift"></i> <span>Fiches</span></a></li>
+
+            </ul>
+        </section>
+    </aside>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -38,13 +98,11 @@
         <section class="content">
             <div calendar id="calendar"></div>
         </section>
-        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
-                data-target="#addModal" ng-click="ctrl.setAddMode()"><i
-                class="glyphicon glyphicon-plus"></i> New
-        </button>
     </div>
 
-    <ng-include src="'dist/js/views/main.footer.html'"></ng-include>
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2017 <a href="#">Medlab</a>.</strong>
+    </footer>
 
 </div>
 
