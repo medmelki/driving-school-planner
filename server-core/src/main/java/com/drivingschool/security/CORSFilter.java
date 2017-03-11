@@ -21,7 +21,7 @@ public class CORSFilter extends OncePerRequestFilter {
 
     private String allowMethods = "POST, GET, PUT, DELETE, OPTIONS";
 
-    private String pattern = "http://localhost.*";
+    private String pattern = ".*";
 
     private Pattern regex = Pattern.compile(pattern);
 
