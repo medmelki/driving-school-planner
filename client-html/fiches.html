@@ -104,6 +104,7 @@
                                 <thead>
                                 <tr>
                                     <th>N° Contrat</th>
+                                    <th>Prénom</th>
                                     <th>Nom</th>
                                     <th>CIN</th>
                                     <th>Type</th>
@@ -123,6 +124,7 @@
                                 <tr ng-repeat="card in ctrl.cards | objectsById:activeCard">
                                     <td ng-bind="card.contractId"></td>
                                     <td ng-bind="card.firstname"></td>
+                                    <td ng-bind="card.lastname"></td>
                                     <td ng-bind="card.cin"></td>
                                     <td ng-bind="card.type"></td>
                                     <td ng-bind="card.phone"></td>
