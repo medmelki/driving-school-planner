@@ -66,6 +66,8 @@ app.controller('CardController', ['$rootScope', '$scope', 'Upload', 'CardService
 
         self.submit = function (card, isUpdateMode) {
             // card.time = new Date(card.time).getTime();
+            card.dateOfBirth = new Date(card.dateOfBirth).getTime();
+            card.dateOfInscription = new Date(card.dateOfInscription).getTime();
             $scope.updateMode = isUpdateMode;
             console.log($scope.updateMode);
             if ($scope.updateMode === 0) {
