@@ -31,7 +31,7 @@ public class Card implements Serializable {
     private Long dateOfBirth;
     private Long dateOfInscription;
     private String email;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "card", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "card", orphanRemoval = true)
     private List<Appointment> appointments;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SCHOOL_ID")

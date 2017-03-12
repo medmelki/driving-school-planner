@@ -75,8 +75,7 @@ public class AppointmentController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Appointment> deleteAppointment(@PathVariable String id) {
 
-        Appointment appointment = new Appointment();
-        appointment.setId(id);
+        Appointment appointment = appointmentService.read(id);
         appointmentService.delete(appointment);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
