@@ -73,7 +73,7 @@ app.directive('calendar', ['AppointmentService', '$filter',
                             }, function (newValue, oldValue) {
                                 if (appointment.card.firstname) {
                                     event.title = appointment.card.firstname + ' ' + appointment.card.lastname;
-
+                                    event.card = appointment.card;
                                     $('#calendar').fullCalendar('rerenderEvents');
                                     $('#calendar').fullCalendar('unselect');
                                 }
