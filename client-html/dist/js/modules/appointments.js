@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'AppointmentService', 'CommonService',
-    function ($rootScope, $scope, Upload, AppointmentService, CommonService) {
+app.controller('AppointmentController', ['$rootScope', '$filter', '$scope', 'Upload', 'AppointmentService', 'CommonService',
+    function ($rootScope, $filter, $scope, Upload, AppointmentService, CommonService) {
 
         var self = this;
         self.appointment = {};
@@ -12,7 +12,14 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
             AppointmentService.findAllAppointments()
                 .then(
                     function (d) {
-                        self.appointments = d;
+                        self.appointments = [];
+                        for (var i = 0; i < d.length; i++) {
+                            var appointment = d[i];
+                            appointment.title = d[i].card.firstname + " " + d[i].card.lastname;
+                            appointment.start = $filter('date')(d[i].start, "yyyy-MM-dd HH:mm:ss Z");
+                            appointment.end = $filter('date')(d[i].end, "yyyy-MM-dd HH:mm:ss Z");
+                            self.appointments.push(appointment);
+                        }
                     },
                     function (errResponse) {
                         console.error('Error while fetching Appointments');
@@ -74,6 +81,7 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
                 console.log('Appointment updated with id ', appointment.id);
             }
             self.reset();
+            self.findAllAppointments();
         };
 
         self.edit = function (id) {
@@ -96,6 +104,7 @@ app.controller('AppointmentController', ['$rootScope', '$scope', 'Upload', 'Appo
 
         self.reset = function () {
             self.appointment = {};
+            self.opComplete = false;
         };
 
         self.populateModal = function (appointment) {
