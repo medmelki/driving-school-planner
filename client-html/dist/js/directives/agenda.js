@@ -26,27 +26,28 @@ app.directive('calendar', ['AppointmentService', '$filter',
                     selectable: true,
                     selectHelper: true,
                     select: function (start, end) {
-                        scope.$parent.appCtrl.updateMode = 0;
-                        $('#addAppointmentModal').modal();
-                        var eventData;
-                        var appointment = scope.$parent.appCtrl.appointment;
-                        appointment.start = moment(start._d).toDate().getTime();
-                        appointment.end = moment(end._d).toDate().getTime();
-                        scope.$watch(function () {
-                            return appointment.card.firstname;
-                        }, function (newValue, oldValue) {
-                            if (appointment.card.firstname) {
-                                eventData = {
-                                    title: appointment.card.firstname + ' ' + appointment.card.lastname,
-                                    start: start,
-                                    end: end
-                                };
+                        if (!$('#addAppointmentModal').hasClass('ng-hide')) {
+                            scope.$parent.appCtrl.updateMode = 0;
+                            $('#addAppointmentModal').modal();
+                            var eventData;
+                            var appointment = scope.$parent.appCtrl.appointment;
+                            appointment.start = moment(start._d).toDate().getTime();
+                            appointment.end = moment(end._d).toDate().getTime();
+                            scope.$watch(function () {
+                                return appointment.card.firstname;
+                            }, function (newValue, oldValue) {
+                                if (appointment.card.firstname) {
+                                    eventData = {
+                                        title: appointment.card.firstname + ' ' + appointment.card.lastname,
+                                        start: start,
+                                        end: end
+                                    };
 
-                                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-                                $('#calendar').fullCalendar('unselect');
-                            }
-                        }, true);
-
+                                    $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                                    $('#calendar').fullCalendar('unselect');
+                                }
+                            }, true);
+                        }
                     },
                     eventClick: function (event, jsEvent, view) {
                         var $contextMenu = $("#contextMenu");
@@ -82,7 +83,7 @@ app.directive('calendar', ['AppointmentService', '$filter',
                         $('#context-delete-btn').click(function () {
                             appointment.id = event.id;
                             appCtrl.remove();
-                            $('#calendar').fullCalendar('removeEvents',event._id);
+                            $('#calendar').fullCalendar('removeEvents', event._id);
                             $('#calendar').fullCalendar('rerenderEvents');
                             $contextMenu.hide();
                         });

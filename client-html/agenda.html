@@ -81,7 +81,7 @@
 
                 <li class="active"><a href="agenda.html"><i class="glyphicon glyphicon-asterisk"></i>
                     <span>Agenda</span></a></li>
-                <li><a href="fiches.html"><i class="glyphicon glyphicon-gift"></i> <span>Fiches</span></a></li>
+                <li><a ng-show="userCtrl.isAdmin" href="fiches.html"><i class="glyphicon glyphicon-gift"></i> <span>Fiches</span></a></li>
 
             </ul>
         </section>
@@ -111,8 +111,8 @@
     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu"
         style="display:block;position:static;margin-bottom:5px;">
         <li><a id="context-info-btn" tabindex="-1" href="#">Voir Infos</a></li>
-        <li><a id="context-modify-btn" tabindex="-1" href="#">Modifier</a></li>
-        <li><a id="context-delete-btn" tabindex="-1" href="#">Supprimer</a></li>
+        <li><a id="context-modify-btn" tabindex="-1" href="#" ng-show="userCtrl.isAdmin">Modifier</a></li>
+        <li><a id="context-delete-btn" tabindex="-1" href="#" ng-show="userCtrl.isAdmin">Supprimer</a></li>
         <li class="divider" style="margin: 2px 0;"></li>
         <li><a id="context-close-btn" tabindex="-1" href="#">Fermer</a></li>
     </ul>
@@ -133,7 +133,7 @@
         </div>
     </div>
 </div>
-<div id="addAppointmentModal" class="modal fade">
+<div id="addAppointmentModal" class="modal fade" ng-show="userCtrl.isAdmin">
     <div class="modal-dialog">
         <div class="modal-content" style="background: rgb(250, 250, 250)">
             <div class="modal-header">
