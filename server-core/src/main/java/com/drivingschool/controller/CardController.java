@@ -48,6 +48,8 @@ public class CardController {
     @PreAuthorize(PermissionUtils.HAS_A_MANAGE_ROLE)
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public ResponseEntity<Card> updateCard(@RequestBody Card card) {
+        Card oldCard = cardService.read(card.getContractId());
+        card.setAppointments(oldCard.getAppointments());
         cardService.update(card);
         return new ResponseEntity<>(card, HttpStatus.OK);
     }
