@@ -58,7 +58,7 @@ public class UserController {
         return new ResponseEntity<>(usersResult, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_SUPERADMIN')")
+    @PreAuthorize(PermissionUtils.HAS_ANY_ROLE)
     @RequestMapping(value = "/{role}", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listByRole(@PathVariable("role") String role) {
 
