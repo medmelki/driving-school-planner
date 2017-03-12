@@ -66,17 +66,37 @@
 
     <aside class="main-sidebar">
         <section class="sidebar">
+            <form action="#" method="get" class="sidebar-form" style="margin-top: 50px;">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Chercher par Contrat..."
+                           ng-model="activeContract">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search by Username..."
-                           ng-model="activeUser">
+                    <input type="text" name="q" class="form-control" placeholder="Chercher par Nom..."
+                           ng-model="activeLastname">
                     <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
                 </div>
             </form>
-            <ul class="sidebar-menu">
+            <form action="#" method="get" class="sidebar-form">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Chercher par Prénom..."
+                           ng-model="activeFirstname">
+                    <span class="input-group-btn">
+                <button type="submit" name="search" class="btn btn-flat"><i class="fa fa-search"></i>
+                </button>
+              </span>
+                </div>
+            </form>
+            <ul class="sidebar-menu" style="margin-top: 50px;">
                 <li class="header">Dashboard</li>
                 <li><a href="agenda.html"><i class="glyphicon glyphicon-asterisk"></i> <span>Agenda</span></a></li>
                 <li class="active"><a href="fiches.html"><i class="glyphicon glyphicon-gift"></i> <span>Fiches</span></a></li>
@@ -121,7 +141,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="card in ctrl.cards | objectsById:activeCard">
+                                <tr ng-repeat="card in ctrl.cards | filter:{contractId:activeContract, lastname:activeLastname, firstname:activeFirstname} ">
                                     <td ng-bind="card.contractId"></td>
                                     <td ng-bind="card.firstname"></td>
                                     <td ng-bind="card.lastname"></td>
